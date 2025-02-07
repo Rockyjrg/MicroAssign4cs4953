@@ -31,7 +31,10 @@ func main() {
 	var anotherName string
 	fmt.Print("Enter a name for a creature with random stats: ")
 	fmt.Scanln(&anotherName)
-	fmt.Print(RandomRPGCreature(anotherName))
+	fmt.Println(RandomRPGCreature(anotherName))
+
+	fmt.Println("Now printing random creatures with stats:")
+	CreateRPGRoster(rand.IntN(10))
 }
 
 func NewRPGCreature(name string) Creature {
@@ -45,4 +48,19 @@ func RandomRPGCreature(name string) Creature {
 		Strength:     rand.IntN(9) + 1,
 		Intelligence: rand.IntN(9) + 1}
 
+}
+
+func CreateRPGRoster(size int) []Creature {
+	firstSlice := make([]Creature, size)
+	var totalDexterity, totalStrength, totalIntelligence int
+	for i := range firstSlice {
+		name := fmt.Sprintf("Creature%d", i+1)
+		firstSlice[i] = RandomRPGCreature(name)
+		totalDexterity += firstSlice[i].Dexterity
+		totalStrength += firstSlice[i].Strength
+		totalIntelligence += firstSlice[i].Intelligence
+		fmt.Println(firstSlice[i])
+	}
+	fmt.Println("Sum of Dex, Strength, and Int respectively", totalDexterity, totalStrength, totalIntelligence)
+	return firstSlice
 }
